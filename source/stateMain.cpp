@@ -20,22 +20,22 @@ bool MainGame::init(Graphics* graph, Game* g) {
 bool MainGame::loadAudio() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     click = Mix_LoadWAV("media/audio/hover.wav");
-    if( click == nullptr ) {
+    if( click == NULL ) {
         std::cerr << "Failed to load beat 'click', error:" << Mix_GetError() << std::endl;
         return false;
     }
     cat1 = Mix_LoadWAV("media/audio/meow1.wav");
-    if( cat1 == nullptr ) {
+    if( cat1 == NULL ) {
         std::cerr << "Failed to load beat 'meow', error:" << Mix_GetError() << std::endl;
         return false;
     }
     cat2 = Mix_LoadWAV("media/audio/meow2.wav");
-    if( cat2 == nullptr ) {
+    if( cat2 == NULL ) {
         std::cerr << "Failed to load beat 'meow', error:" << Mix_GetError() << std::endl;
         return false;
     }
     cat3 = Mix_LoadWAV("media/audio/meow3.wav");
-    if( cat3 == nullptr ) {
+    if( cat3 == NULL ) {
         std::cerr << "Failed to load beat 'meow', error:" << Mix_GetError() << std::endl;
         return false;
     }
@@ -187,10 +187,10 @@ void MainGame::render() {
 
 MainGame::~MainGame() {
     Mix_Quit();
-    game = nullptr;
-    graphics = nullptr;
-    click = nullptr;
-    cat1 = nullptr;
-    cat2 = nullptr;
-    cat3 = nullptr;
+    game = NULL;
+    graphics = NULL;
+    click = NULL;
+    cat1 = NULL;
+    cat2 = NULL;
+    cat3 = NULL;
 }

@@ -177,8 +177,8 @@ void MenuState::render() {
 
 MenuState::~MenuState() {
     Mix_Quit();
-    graphics = nullptr;
-    game = nullptr;
-    rollOver = nullptr;
-    clickSound = nullptr;
+    graphics = NULL;
+    game = NULL;
+    rollOver = NULL;
+    clickSound = NULL;
 }

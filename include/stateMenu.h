@@ -12,8 +12,8 @@ public:
     void update();
     void render();
 private:
-    Graphics* graphics = nullptr;
-    Game* game = nullptr;
+    Graphics* graphics = NULL;
+    Game* game = NULL;
     
     // MenuState Functions
     void loadPositions (std::vector<SDL_Rect>& positions, const int& gridsize, const int& shiftPx = 0);
@@ -40,8 +40,8 @@ private:
     std::vector<SDL_Rect> positions;
     std::vector<SDL_Rect> shadowPositions;
     
-    Mix_Chunk* rollOver = nullptr;
-    Mix_Chunk* clickSound = nullptr;
+    Mix_Chunk* rollOver = NULL;
+    Mix_Chunk* clickSound = NULL;
 };
 
 #endif

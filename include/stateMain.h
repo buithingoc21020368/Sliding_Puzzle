@@ -13,8 +13,8 @@ class MainGame : public GameState {
     void render();
     
 private:
-    Game* game = nullptr;
-    Graphics* graphics = nullptr;
+    Game* game = NULL;
+    Graphics* graphics = NULL;
     
     // MainGame functions
     void makeTiles(std::vector<Tile>& tiles, const std::vector<SDL_Rect>& posiitons, const int& tiletype);
@@ -38,10 +38,10 @@ private:
     std::vector<SDL_Rect> positions;
     std::vector<SDL_Rect> shadowPositions;
     
-    Mix_Chunk* click = nullptr;
-    Mix_Chunk* cat1  = nullptr;
-    Mix_Chunk* cat2  = nullptr;
-    Mix_Chunk* cat3  = nullptr;
+    Mix_Chunk* click = NULL;
+    Mix_Chunk* cat1  = NULL;
+    Mix_Chunk* cat2  = NULL;
+    Mix_Chunk* cat3  = NULL;
 };
 
 #endif

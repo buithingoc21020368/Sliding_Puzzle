@@ -4,19 +4,21 @@
 #include <SDL_image.h>
 
 bool Graphics::setup() {
+    //Initialize SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cerr << "Error: init" << SDL_GetError() << std::endl;
         return false;
     }
     
+    //Create window
     window = SDL_CreateWindow("Sliding Puzzle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == nullptr) {
+    if (window == NULL) {
         std::cerr << "Error: Create window" << SDL_GetError() << std::endl;
         return false;
     }
     
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (renderer == nullptr) {
+    if (renderer == NULL) {
         std::cerr << "Error: Create renderer" << SDL_GetError() << std::endl;
         return false;
     }
@@ -26,7 +28,7 @@ bool Graphics::setup() {
         return false;
     }
     cat = IMG_LoadTexture(renderer, "media/graphics/cat2.png");
-    if (cat == nullptr) {
+    if (cat == NULL) {
         std::cerr << "Error: Load cat texture";
         return false;
     }
@@ -37,14 +39,14 @@ void Graphics::destroy() {
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    window = nullptr;
-    renderer = nullptr;
-    tilenumber = nullptr;
-    clicks = nullptr;
-    wintext = nullptr;
-    menutext = nullptr;
-    menuinstr = nullptr;
-    cat = nullptr;
+    window = NULL;
+    renderer = NULL;
+    tilenumber = NULL;
+    clicks = NULL;
+    wintext = NULL;
+    menutext = NULL;
+    menuinstr = NULL;
+    cat = NULL;
 }
 
 void Graphics::setGridSize(const int& n) {
@@ -77,7 +79,7 @@ void Graphics::drawBoard(const std::vector<Tile>& t, const bool& drawnumber) {
                 std::string num = std::to_string(i+1); // position numbers count from 1
                 tilenumber = renderText(num, "media/font/Calibrib.ttf", fontcolour, 25);
                 SDL_QueryTexture(tilenumber, NULL, NULL, &temp.w, &temp.h);
-                renderTexture(tilenumber, temp.x+(TILE_SIZE/2 - temp.w/2), temp.y+(TILE_SIZE/2 - temp.h/2), nullptr);
+                renderTexture(tilenumber, temp.x+(TILE_SIZE/2 - temp.w/2), temp.y+(TILE_SIZE/2 - temp.h/2), NULL);
             }
         }
     }
@@ -107,7 +109,7 @@ void Graphics::updateClicks(const int& n) {
     SDL_RenderFillRect         (renderer, &clickBannerShadow);
     SDL_SetRenderDrawColor     (renderer, 237, 229, 239, 1);
     SDL_RenderFillRect         (renderer, &clickBanner);
-    renderTexture(clicks, (0.77*(clickBanner.x+clickBanner.w) - W/2), (0.8*(clickBanner.y+clickBanner.h) - H/2), nullptr);
+    renderTexture(clicks, (0.77*(clickBanner.x+clickBanner.w) - W/2), (0.8*(clickBanner.y+clickBanner.h) - H/2), NULL);
 }
 
 void Graphics::winMessage(const bool& win, const int& clicks, const std::string& message) {
@@ -124,7 +126,7 @@ void Graphics::winMessage(const bool& win, const int& clicks, const std::string&
         SDL_RenderFillRect       (renderer, &winBannerShadow);
         SDL_SetRenderDrawColor   (renderer, 237, 229, 239, 1);
         SDL_RenderFillRect       (renderer, &winBanner);
-        renderTexture(wintext, (0.5*WINDOW_WIDTH - 0.5*W), (0.5*WINDOW_HEIGHT - H), nullptr);
+        renderTexture(wintext, (0.5*WINDOW_WIDTH - 0.5*W), (0.5*WINDOW_HEIGHT - H), NULL);
     }
 }
 
@@ -133,7 +135,7 @@ void Graphics::menuInstruction(const std::string& message) {
     menuinstr = renderText(message, "media/font/GreenFlame.ttf", darkpink, 12);
     int W; int H;
     SDL_QueryTexture(menuinstr, NULL, NULL, &W, &H);
-    renderTexture(menuinstr, (0.5*WINDOW_WIDTH - 0.5*W), (WINDOW_HEIGHT - 0.5*WINDOW_PADDING), nullptr);
+    renderTexture(menuinstr, (0.5*WINDOW_WIDTH - 0.5*W), (WINDOW_HEIGHT - 0.5*WINDOW_PADDING), NULL);
 }
 
 void Graphics::menuText(std::vector<Tile> tiles, const bool& catmode) {
@@ -144,10 +146,10 @@ void Graphics::menuText(std::vector<Tile> tiles, const bool& catmode) {
         std::string numStr = std::to_string(number);
         std::string message = numStr + " x " + numStr;
         
-        menutext = renderText(message, "assets/Calibrib.ttf", fontcolour, 25);
+        menutext = renderText(message, "media/font/Calibrib.ttf", fontcolour, 25);
         SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
         renderTexture(menutext, (tiles[i].position().x + 0.5*tiles[i].position().w - 0.5*W),
-                                (tiles[i].position().y + 0.5*tiles[i].position().h - 0.5*H), nullptr);
+                                (tiles[i].position().y + 0.5*tiles[i].position().h - 0.5*H), NULL);
         number += 1;
     }
     if (catmode){
@@ -155,24 +157,24 @@ void Graphics::menuText(std::vector<Tile> tiles, const bool& catmode) {
         menutext = renderText("Cat Mode", "media/font/Calibrib.ttf", tilecolour, 20);
         SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
         renderTexture(menutext, (tiles[6].position().x + 0.5*tiles[6].position().w - 0.5*W + 2),
-                                (tiles[6].position().y + 0.5*tiles[6].position().h - 0.5*H + 2), nullptr);
+                                (tiles[6].position().y + 0.5*tiles[6].position().h - 0.5*H + 2), NULL);
     }
     
     menutext = renderText("START", "media/font/Calibrib.ttf", fontcolour, 25);
     SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
     renderTexture(menutext, (tiles[7].position().x + 0.5*tiles[7].position().w - 0.5*W),
-                            (tiles[7].position().y + 0.5*tiles[7].position().h - 0.5*H), nullptr);
+                            (tiles[7].position().y + 0.5*tiles[7].position().h - 0.5*H), NULL);
     
-    menutext = renderText("Select your grid size:", "assets/GreenFlame.ttf", fontcolour, 20);
+    menutext = renderText("Select your grid size:", "media/font/GreenFlame.ttf", fontcolour, 20);
     SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
-    renderTexture(menutext, 0.5*WINDOW_WIDTH - 0.5*W, WINDOW_PADDING-1.5*H, nullptr);
+    renderTexture(menutext, 0.5*WINDOW_WIDTH - 0.5*W, WINDOW_PADDING-1.5*H, NULL);
 }
 
-void Graphics::renderTexture(SDL_Texture *tex, int x, int y, SDL_Rect *clip = nullptr) {
+void Graphics::renderTexture(SDL_Texture *tex, int x, int y, SDL_Rect *clip = NULL) {
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
-    if (clip != nullptr){
+    if (clip != NULL){
         dst.w = clip->w;
         dst.h = clip->h;
     }
@@ -185,20 +187,20 @@ void Graphics::renderTexture(SDL_Texture *tex, int x, int y, SDL_Rect *clip = nu
 SDL_Texture* Graphics::renderText(const std::string &message, const std::string &filepath, SDL_Color colour, int fontsize) {
     //Open the font
     TTF_Font *font = TTF_OpenFont(filepath.c_str(), fontsize);
-    if (font == nullptr){
+    if (font == NULL){
         std::cerr << "TTF_OpenFont" << TTF_GetError;
-        return nullptr;
+        return NULL;
     }
     //render to a surface as that's what TTF_RenderText returns
     SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), colour);
-    if (surf == nullptr){
+    if (surf == NULL){
         TTF_CloseFont(font);
         std::cout << "TTF_RenderText" << TTF_GetError;
-        return nullptr;
+        return NULL;
     }
     //load that surface into texture
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
-    if (texture == nullptr){
+    if (texture == NULL){
         std::cout << "CreateTexture" << SDL_GetError();
     }
     //Clean up surface and font
