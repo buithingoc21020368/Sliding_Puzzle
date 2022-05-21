@@ -37,11 +37,10 @@ private:
     int TILE_PADDING = rawSize / 10;
     int TILE_SIZE    = rawSize - TILE_PADDING;
     
-    SDL_Colour fontcolour {0, 0, 0, 1};
+    SDL_Colour fontcolour {0, 0, 0, 255};
     
     SDL_Window*   window     = NULL;
     SDL_Renderer* renderer   = NULL;
-    
     SDL_Texture*  tilenumber = NULL;
     SDL_Texture*  clicks     = NULL;
     SDL_Texture*  wintext    = NULL;

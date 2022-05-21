@@ -3,7 +3,9 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
+//Setup graphics
 bool Graphics::setup() {
+
     //Initialize SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cerr << "Error: init" << SDL_GetError() << std::endl;
@@ -17,16 +19,20 @@ bool Graphics::setup() {
         return false;
     }
     
+    //Create drawing pen
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL) {
         std::cerr << "Error: Create renderer" << SDL_GetError() << std::endl;
         return false;
     }
     
-    if( TTF_Init() == -1 ) {
+    //Initialize the truetype font API 
+    if (TTF_Init() < 0) {
         std::cerr << "SDL_ttf could not initialise" << TTF_GetError() << std::endl;
         return false;
     }
+
+
     cat = IMG_LoadTexture(renderer, "media/graphics/cat2.png");
     if (cat == NULL) {
         std::cerr << "Error: Load cat texture";
@@ -35,6 +41,7 @@ bool Graphics::setup() {
     return true;
 }
 
+//Release memory
 void Graphics::destroy() {
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
@@ -49,6 +56,7 @@ void Graphics::destroy() {
     cat = NULL;
 }
 
+//Setup grid size
 void Graphics::setGridSize(const int& n) {
     grid = n;
     rawSize = (WINDOW_WIDTH - 2*WINDOW_PADDING) / grid;
@@ -56,28 +64,30 @@ void Graphics::setGridSize(const int& n) {
     TILE_SIZE    = rawSize - TILE_PADDING;
 }
 
+//Draw board
 void Graphics::drawBoard(const std::vector<Tile>& t, const bool& drawnumber) {
     for (int i = 0; i < t.size(); ++i) {
         SDL_Rect temp = t[i].position();
         
         if      (t[i].tileType() == Tile::type::invisible)
-            SDL_SetRenderDrawColor(renderer, 163, 118, 172, 1); // bg colour
+            SDL_SetRenderDrawColor(renderer, 163, 118, 172, 1); //empty board colour
         
         else if (t[i].tileType() == Tile::type::rollover || t[i].tileType() == Tile::type::buttonpressed)
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); // highlight colour
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1); //highlight board colour
         
         else if (t[i].tileType() == Tile::type::shadow)
-            SDL_SetRenderDrawColor(renderer, 100, 65, 107, 1); // shadow colour
+            SDL_SetRenderDrawColor(renderer, 100, 65, 107, 1); //shadow colour
         
         else
-            SDL_SetRenderDrawColor(renderer, 237, 229, 239, 1); // default colour
+            SDL_SetRenderDrawColor(renderer, 237, 229, 239, 1); //default board colour
         
         SDL_RenderFillRect(renderer, &temp);
         
         if (drawnumber){
             if (t[i].tileType() != Tile::type::invisible) {
-                std::string num = std::to_string(i+1); // position numbers count from 1
-                tilenumber = renderText(num, "media/font/Calibrib.ttf", fontcolour, 25);
+                std::cout << "Check tile" << '\n';
+                std::string num = std::to_string(i+1); //position numbers count from 1
+                tilenumber = renderText(num, "media/font/arial.ttf", fontcolour, 25);
                 SDL_QueryTexture(tilenumber, NULL, NULL, &temp.w, &temp.h);
                 renderTexture(tilenumber, temp.x+(TILE_SIZE/2 - temp.w/2), temp.y+(TILE_SIZE/2 - temp.h/2), NULL);
             }
@@ -99,7 +109,7 @@ void Graphics::renderCat(const std::vector<Tile>& tiles, const std::vector<SDL_R
 void Graphics::updateClicks(const int& n) {
     std::string count = std::to_string(n);
     std::string message = "Clicks: " + count;
-    clicks = renderText(message, "media/font/GreenFlame.ttf", fontcolour, 15);
+    clicks = renderText(message, "media/font/arial.ttf", fontcolour, 15);
     int W; int H;
     SDL_QueryTexture(clicks, NULL, NULL, &W, &H);
     
@@ -114,7 +124,7 @@ void Graphics::updateClicks(const int& n) {
 
 void Graphics::winMessage(const bool& win, const int& clicks, const std::string& message) {
     if (win == true && clicks > 0){
-        wintext = renderText(message, "media/font/Calibrib.ttf", fontcolour, 15);
+        wintext = renderText(message, "media/font/arial.ttf", fontcolour, 15);
         int W; int H;
         SDL_QueryTexture(wintext, NULL, NULL, &W, &H);
         
@@ -132,7 +142,7 @@ void Graphics::winMessage(const bool& win, const int& clicks, const std::string&
 
 void Graphics::menuInstruction(const std::string& message) {
     SDL_Color darkpink { 100, 65, 107, 1 };
-    menuinstr = renderText(message, "media/font/GreenFlame.ttf", darkpink, 12);
+    menuinstr = renderText(message, "media/font/arial.ttf", darkpink, 12);
     int W; int H;
     SDL_QueryTexture(menuinstr, NULL, NULL, &W, &H);
     renderTexture(menuinstr, (0.5*WINDOW_WIDTH - 0.5*W), (WINDOW_HEIGHT - 0.5*WINDOW_PADDING), NULL);
@@ -146,26 +156,26 @@ void Graphics::menuText(std::vector<Tile> tiles, const bool& catmode) {
         std::string numStr = std::to_string(number);
         std::string message = numStr + " x " + numStr;
         
-        menutext = renderText(message, "media/font/Calibrib.ttf", fontcolour, 25);
+        menutext = renderText(message, "media/font/arial.ttf", fontcolour, 25);
         SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
         renderTexture(menutext, (tiles[i].position().x + 0.5*tiles[i].position().w - 0.5*W),
                                 (tiles[i].position().y + 0.5*tiles[i].position().h - 0.5*H), NULL);
         number += 1;
     }
     if (catmode){
-        SDL_Color tilecolour { 237, 229, 239, 1 };
-        menutext = renderText("Cat Mode", "media/font/Calibrib.ttf", tilecolour, 20);
+        SDL_Color tilecolour { 237, 229, 239, 1};
+        menutext = renderText("Cat Mode", "media/font/arial.ttf", tilecolour, 20);
         SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
         renderTexture(menutext, (tiles[6].position().x + 0.5*tiles[6].position().w - 0.5*W + 2),
                                 (tiles[6].position().y + 0.5*tiles[6].position().h - 0.5*H + 2), NULL);
     }
     
-    menutext = renderText("START", "media/font/Calibrib.ttf", fontcolour, 25);
+    menutext = renderText("START", "media/font/arial.ttf", fontcolour, 25);
     SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
     renderTexture(menutext, (tiles[7].position().x + 0.5*tiles[7].position().w - 0.5*W),
                             (tiles[7].position().y + 0.5*tiles[7].position().h - 0.5*H), NULL);
     
-    menutext = renderText("Select your grid size:", "media/font/GreenFlame.ttf", fontcolour, 20);
+    menutext = renderText("Select your grid size:", "media/font/arial.ttf", fontcolour, 20);
     SDL_QueryTexture(menutext, NULL, NULL, &W, &H);
     renderTexture(menutext, 0.5*WINDOW_WIDTH - 0.5*W, WINDOW_PADDING-1.5*H, NULL);
 }
