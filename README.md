@@ -28,4 +28,5 @@
 
 - Thêm giới hạn về thời gian
 - Có bảng điểm
+- Thêm chế độ quay trở lại menu sau khi chơi xong
 - Có các hình ảnh các loại
