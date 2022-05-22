@@ -1,2 +1,2 @@
-All:
-	g++ source/*.cpp -ISDL2/include/SDL2 -LSDL2/lib -Iinclude -w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -o Sliding-Puzzle.exe
+all:
+	g++ -w -ISDL2\include -LSDL2\lib -o Sliding_Puzzle *.cpp -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
