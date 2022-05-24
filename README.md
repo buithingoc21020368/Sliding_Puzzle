@@ -30,10 +30,12 @@
 ## Kết luận, hướng phát triển, các điều tâm đắc:
 
 Game đã tương đối hoàn chỉnh: có đồ hoạ, âm thanh, menu, thông báo, tính số lượt di chuyển
+
 Hướng cải tiến:
 - Thêm giới hạn về thời gian, bảng điểm, nút bật tắt âm thanh, chế độ quay trở lại menu sau khi chơi xong
 - Đa dạng các hình ảnh hơn
 - Cải tiến hàm xáo trộn hình ảnh để cùng một hình và một mức độ chơi có thể chơi được nhiều lần mà không bị trùng lặp, đảm bảo thứ tự các hình ảnh đã xáo trộn có thể đưa về hình gốc được 
+
 Điều tâm đắc: 
 - Học được cách cài đặt thư viện, setup môi trường
 - Cải tiến các chức năng của game
