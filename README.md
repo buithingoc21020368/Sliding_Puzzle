@@ -20,7 +20,7 @@
 - Chơi lại : nút SPACE
 - Âm thanh khi di chuyển chuột và khi click vào một mảnh hình ảnh bất ký
 - Đếm số lần click chuột
-- video demo: https://drive.google.com/file/d/16uk853l6dbYS-8sD06wxu8jftEmJ5KKr/view?usp=sharing
+- Video demo: https://drive.google.com/file/d/16uk853l6dbYS-8sD06wxu8jftEmJ5KKr/view?usp=sharing
 
 ## Các kĩ thuật lập trình được sử dụng:
 
